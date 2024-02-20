@@ -9,7 +9,6 @@
   transform-origin: 0 0;
   top: calc(50% - 1em);
   left: calc(50% - 1em);
-  
   transform-origin: 6px 2px;
 }
 
@@ -17,8 +16,8 @@
   position: absolute;
   width: 7em;
   transform-origin: 0 0;
-  top: calc(50% - 5.5em);
-  left: calc(50% - 1em);
+  top: calc(50% + 3em);
+  left: calc(50% - 4em);
 }
 
 .hour {

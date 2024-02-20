@@ -13,25 +13,31 @@ function App() {
   const hourHandRef = useRef( null )
   const [ ticker, setTicker ] = useState( 0 )
 
-  // useEffect(() => {
-  //   secondHandRef.current.style.transform="rotate("+ 240 +"deg)"
-  // }, [])
-
   useEffect(() => {
-    const tickInterval = setInterval(() => {
-      setTicker(old => old + 1 )
-    }, 1000)
     const date = new Date();
     const time = {
       second: date.getSeconds(),
       minute: date.getMinutes(),
       hour: date.getHours()
     };
+    function calculateMinuteHandAngle(minutes) {
+      let hoursFraction = minutes / 60;
+      let angle = Math.abs(6 * minutes - 0.5 * (hoursFraction * 60 + minutes));
+      return angle;
+  }
+    console.log({ min: time.minute, angle: calculateMinuteHandAngle(time.minute) })
     secondHandRef.current.style.transform="rotate("+ 240+( time.second * 6 ) +"deg)"; //240 since svg of second hand os at 240 degree from 12:00
-    minuteHandRef.current.style.transform="rotate("+ 48.5+( time.minute * 6 ) +"deg)"
+    minuteHandRef.current.style.transform="rotate("+ calculateMinuteHandAngle(time.minute) +"deg)"
     hourHandRef.current.style.transform="rotate("+ ( time.minute/2 + ( time.hour * 30 ) ) +"deg)"
-    return () => clearInterval( tickInterval )
   }, [ ticker ])
+
+  useEffect(() => {
+    const tickInterval = setInterval(() => {
+      setTicker(old => old + 1 )
+    }, 1000)
+    
+    return () => clearInterval( tickInterval )
+  }, [ ])
 
   return (
     <div
